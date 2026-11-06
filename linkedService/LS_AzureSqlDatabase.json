@@ -1,0 +1,23 @@
+{
+	"name": "LS_AzureSqlDatabase",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "rajnedranishuserver.database.windows.net",
+			"database": "rajendra_sql_database",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "rajendra",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_keyvult",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "metadatadb-password"
+			}
+		}
+	}
+}
