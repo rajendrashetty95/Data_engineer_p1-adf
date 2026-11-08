@@ -99,7 +99,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "INSERT into ctrl.audit_log(adf_run_id,table_id,stage,status,start_time)\nVALUES('a1',@{item().table_id},'Source_to_silver','In_progress',SYSUTCDATETIME())",
+											"value": "INSERT into ctrl.audit_log(adf_run_id,table_id,stage,status,start_time)\nVALUES('@{pipeline().parameters.adf_run_id}',@{item().table_id},'Source_to_silver','In_progress',SYSUTCDATETIME())",
 											"type": "Expression"
 										}
 									}
@@ -114,7 +114,7 @@
 								{
 									"activity": "ingest from source to silver",
 									"dependencyConditions": [
-										"Succeeded"
+										"Failed"
 									]
 								}
 							],
@@ -135,7 +135,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "INSERT into ctrl.audit_log(adf_run_id,table_id,stage,status,start_time)\nVALUES('a1',@{item().table_id},'Source_to_silver','In_progress',SYSUTCDATETIME())",
+											"value": "update ctrl.audit_log \nset status ='FAILED', end_time = SYSUTCDATETIME()\nWHERE adf_run_id = '@{pipeline().parameters.adf_run_id}' and table_id = @{item().table_id}",
 											"type": "Expression"
 										}
 									}
@@ -151,6 +151,10 @@
 			"source_system": {
 				"type": "string",
 				"defaultValue": "neon_postgres"
+			},
+			"adf_run_id": {
+				"type": "string",
+				"defaultValue": "a2"
 			}
 		},
 		"variables": {
