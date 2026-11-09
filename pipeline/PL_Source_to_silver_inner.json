@@ -70,7 +70,7 @@
 					"source": {
 						"type": "PostgreSqlV2Source",
 						"query": {
-							"value": "select * from public.@{activity('Read Table details').output.firstRow.source_table_name}",
+							"value": "select * from public.@{activity('Read Table details').output.firstRow.source_table_name}\n@{\n    if(equals(activity('Read Table details').output.firstRow.load_type,'FULL')\n    ,'',\n    concat(\n        'where ',activity('Read Table details').output.firstRow.watermakr_column,' >','''',variables('watermark_value'),''''\n        )\n    )\n} where updated_at > '1900-01-01T00:00:00'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00"
