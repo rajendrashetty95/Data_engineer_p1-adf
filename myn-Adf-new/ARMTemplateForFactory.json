@@ -280,7 +280,7 @@
 								{
 									"type": "Query",
 									"text": {
-										"value": "update ctrl.audit_log \nset status ='sucess', end_time = SYSUTCDATETIME(), records_written =@{activity('bronze to silver').output.runOutput}\nWHERE adf_run_id = '@{pipeline().parameters.adf_run_id}' and table_id = @{activity('Read Table details').output.firstRow.table_id}",
+										"value": "update ctrl.audit_log \nset status ='SUCCESS', end_time = SYSUTCDATETIME(), records_written =@{activity('bronze to silver').output.runOutput}\nWHERE adf_run_id = '@{pipeline().parameters.adf_run_id}' and table_id = @{activity('Read Table details').output.firstRow.table_id}",
 										"type": "Expression"
 									}
 								}
@@ -299,7 +299,7 @@
 					},
 					"adf_run_id": {
 						"type": "string",
-						"defaultValue": "a1"
+						"defaultValue": "a4"
 					}
 				},
 				"variables": {
@@ -422,7 +422,7 @@
 											{
 												"type": "Query",
 												"text": {
-													"value": "INSERT into ctrl.audit_log(adf_run_id,table_id,stage,status,start_time)\nVALUES('@{pipeline().parameters.adf_run_id}',@{item().table_id},'Source_to_silver','In_progress',SYSUTCDATETIME())",
+													"value": "INSERT into ctrl.audit_log(adf_run_id,table_id,stage,status,start_time)\nVALUES('@{pipeline().parameters.adf_run_id}',@{item().table_id},'Source_to_silver','IN_PROGRESS',SYSUTCDATETIME())",
 													"type": "Expression"
 												}
 											}
@@ -480,12 +480,7 @@
 					},
 					"adf_run_id": {
 						"type": "string",
-						"defaultValue": "a3"
-					}
-				},
-				"variables": {
-					"test": {
-						"type": "String"
+						"defaultValue": "a4"
 					}
 				},
 				"annotations": []
